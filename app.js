@@ -1,5 +1,7 @@
 // Set constraints for the video stream
 var constraints = { video: { facingMode: { exact: "environment" } }, audio: false };
+var constraintsFallback = { video: { facingMode: "environment" }, audio: false };
+
 var track = null;
 
 // Define constants
@@ -18,6 +20,11 @@ function cameraStart() {
         })
         .catch(function(error) {
             console.error("Oops. Something is broken.", error);
+            getUserMedia(constraintsFallback)
+            .then(function(stream) {
+                track = stream.getTracks()[0];
+                cameraView.srcObject = stream;
+            })
         });
 }
 
@@ -25,7 +32,7 @@ function cameraStart() {
 cameraTrigger.onclick = function() {
     cameraSensor.width = cameraView.videoWidth;
     cameraSensor.height = cameraView.videoHeight;
-    cameraSensor.getContext("2d").drawImage(cameraView, 299, 299);
+    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0, 299, 299);
     cameraOutput.src = cameraSensor.toDataURL("image/jpeg");
     cameraOutput.classList.add("taken");
     // track.stop();
