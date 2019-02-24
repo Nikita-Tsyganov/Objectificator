@@ -40,14 +40,20 @@ cameraTrigger.onclick = function() {
     var resizedCanvas = document.createElement("canvas");
     var resizedContext = resizedCanvas.getContext("2d");
 
-    resizedCanvas.height = "299";
-    resizedCanvas.width = "299";
+    let widthRatio = cameraView.videoWidth / 480;
+    let heigthRatio = cameraView.videoHeigth / 480;
+
+    let resizedWidth = cameraView.videoWidth / widthRatio;
+    let resizedHeight = cameraView.videoHeight / heigthRatio;
+
+    //resizedCanvas.height = "299";
+    //resizedCanvas.width = "299";
 
     //cameraSensor.width = cameraView.videoWidth;
     //cameraSensor.height = cameraView.videoHeight;
     //cameraSensor.getContext("2d").drawImage(cameraView, 0, 0, 299, 299);
     //cameraOutput.src = cameraSensor.toDataURL("image/jpeg");
-    resizedCanvas.getContext("2d").drawImage(cameraView, 0, 0, 299, 299);
+    resizedCanvas.getContext("2d").drawImage(cameraView, 0, 0, resizedWidth, resizedHeight);
     cameraOutput.src = resizedCanvas.toDataURL("image/jpeg");
     cameraOutput.classList.add("taken");
     // track.stop();
