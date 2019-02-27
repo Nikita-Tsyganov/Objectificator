@@ -1,7 +1,13 @@
+if ('serviceWorker' in navigator) {
+
+  let serviceWorkerRegistration = navigator.serviceWorker.register('sw.js');
+
+}
 
 window.onload = () => {
 
     // Set constraints for the video stream
+
     let constraints = {
 
         video: {
@@ -16,6 +22,7 @@ window.onload = () => {
         audio: false
 
     };
+
     let constraintsFallback = {
 
         video: {
@@ -106,20 +113,20 @@ window.onload = () => {
 
     function startButton(event) {
 
-      if (recognizing) {
+        if (recognizing) {
 
-        recognition.stop();
-        console.log("Final speech result: " + final_transcript);
-        final_transcript_array = final_transcript.split(' ');
-        console.log(final_transcript_array);
-        finalKeyword = final_transcript_array[final_transcript_array.length - 1];
-        console.log("The final keyword is: " + finalKeyword);
+            recognition.stop();
+            console.log("Final speech result: " + final_transcript);
+            final_transcript_array = final_transcript.split(' ');
+            console.log(final_transcript_array);
+            finalKeyword = final_transcript_array[final_transcript_array.length - 1];
+            console.log("The final keyword is: " + finalKeyword);
 
-        if (recognitionData) {
+            if (recognitionData) {
 
-            let theClosestLocation = 'center';
-            let highestScore = 0;
-            console.log(recognitionData.left);
+                let theClosestLocation = 'center';
+                let highestScore = 0;
+                console.log(recognitionData.left);
 
             if (recognitionData.left[finalKeyword] > highestScore) {
 
@@ -149,41 +156,46 @@ window.onload = () => {
 
             text2speech(theClosestLocation);
 
+            }
+
+            return;
+
         }
 
-        return;
-
-      }
-
-      final_transcript = '';
-      recognition.lang = "en-US";
-      recognition.start();
-      ignore_onend = false;
-      start_timestamp = event.timeStamp;
+        final_transcript = '';
+        recognition.lang = "en-US";
+        recognition.start();
+        ignore_onend = false;
+        start_timestamp = event.timeStamp;
 
     }
 
     // Access the device camera and stream to cameraView
+
     function cameraStart() {
 
         navigator.mediaDevices
             .getUserMedia(constraints)
+
             .then(function(stream) {
 
                 track = stream.getTracks()[0];
                 cameraView.srcObject = stream;
 
             })
+
             .catch(function(error) {
 
                 navigator.mediaDevices
                 .getUserMedia(constraintsFallback)
+
                 .then(function(stream) {
 
                     track = stream.getTracks()[0];
                     cameraView.srcObject = stream;
 
                 })
+
                 .catch(function(error) {
 
                     console.error("Oops. Something is broken.", error);
@@ -194,30 +206,16 @@ window.onload = () => {
 
     }
 
-    function text2speech (text) {
+    function text2speech(text) {
 
         var msg = new SpeechSynthesisUtterance();
         msg.text = text;
         speechSynthesis.speak(msg);
 
-        /*switch (where) {
-
-            case 'left':
-                msg.text = `${what} is to your left`;
-                break;
-            case 'right':
-                msg.text = `${what} is to your right`;
-                break;
-            case 'center':
-                msg.text = `${what} is straight ahead`;
-                break;
-
-        }            
-        speechSynthesis.speak(msg);*/
-
     }
 
     // Take a picture when cameraTrigger is tapped
+
     cameraTrigger.onclick = function() {
 
         let resizedCanvas = document.createElement("canvas");
@@ -247,27 +245,7 @@ window.onload = () => {
             body: picture
 
         }).then( response => response.json() ).then(data => recognitionData = data);
+
     };
-
-    // Install ServiceWorker
-    if ('serviceWorker' in navigator) {
-
-      console.log('CLIENT: service worker registration in progress.');
-
-      navigator.serviceWorker.register( '/camera-app/part-2/sw.js' , { scope : ' ' } ).then(function() {
-
-        console.log('CLIENT: service worker registration complete.');
-
-      }, function() {
-
-        console.log('CLIENT: service worker registration failure.');
-
-      });
-
-    } else {
-
-      console.log('CLIENT: service worker is not supported.');
-
-    }
 
 }

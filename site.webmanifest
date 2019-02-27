@@ -1,6 +1,6 @@
 {
-    "name": "Camera app",
-    "short_name": "Camera app",
+    "name": "Objectificator",
+    "short_name": "Objectificator",
     "icons": [
         {
             "src": "android-chrome-192x192.png",
@@ -19,7 +19,9 @@
         }
     ],
 
+    "start_url": "index.html",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "standalone",
+    "orientation": "portrait"
 }
