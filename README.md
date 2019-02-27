@@ -20,8 +20,8 @@ Just click [here](https://nikita-tsyganov.github.io/Objectificator)
 OR
 
 Download the repository to your machine.
-Navigate to "frontend-nanodegree-arcade-game-master" folder.
-Start the game by launching the index.html file in your browser.
+Navigate to "Objectificator-master" folder.
+Start the app by launching the index.html file in your browser.
 
 ## How to use
 
