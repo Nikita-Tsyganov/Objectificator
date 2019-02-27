@@ -9,7 +9,7 @@
 
 ## Description
 
-A project on an accessibility theme made during the [GDG DevFest Winnipeg](https://devfest2019.firebaseapp.com/)
+A project on an accessibility theme made during the [GDG DevFest Winnipeg](https://devfest2019.firebaseapp.com/) Hackthon
 
 The idea of the project is to be able to help people with visual impairment by taking a picture of the area where a certain object supposed to be located (a door for example). Then receive a voice command what object to look for, processes the image and notifies the user regarding the object direction on the picture or its absence.
 
